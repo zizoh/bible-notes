@@ -62,37 +62,9 @@ public class AddTodoFragment extends Fragment {
 
         mLocalDb = AppDatabase.getInstance(getActivity().getApplicationContext());
 
-        if (savedInstanceState != null && savedInstanceState.containsKey(INSTANCE_TODO_ID)) {
-            mTodoId = savedInstanceState.getInt(INSTANCE_TODO_ID, DEFAULT_TODO_ID);
-        }
-
         if (null != getArguments()) {
             mTodoId = getArguments().getInt(EXTRA_TODO_ID, DEFAULT_TODO_ID);
         }
-
-
-//        Intent intent = getIntent();
-//        if (intent != null && intent.hasExtra(EXTRA_TODO_ID)) {
-//            //mButton.setText(R.string.update_button);
-//            if (mTodoId == DEFAULT_TODO_ID) {
-//                // populate the UI
-//                mTodoId = intent.getIntExtra(EXTRA_TODO_ID, DEFAULT_TODO_ID);
-//
-//                AddTodoViewModelFactory factory = new AddTodoViewModelFactory(mLocalDb, mTodoId);
-//
-//                final AddTodoViewModel viewModel
-//                        = ViewModelProviders.of(this, factory).get(AddTodoViewModel.class);
-//
-//
-//                viewModel.getTodo().observe(this, new Observer<TodoEntry>() {
-//                    @Override
-//                    public void onChanged(@Nullable TodoEntry todoEntry) {
-//                        viewModel.getTodo().removeObserver(this);
-//                        populateUI(todoEntry);
-//                    }
-//                });
-//            }
-//        }
 
     }
 
@@ -183,6 +155,7 @@ public class AddTodoFragment extends Fragment {
                         }
                     }
                 });
+                getActivity().finish();
             }
         });
 
@@ -196,12 +169,6 @@ public class AddTodoFragment extends Fragment {
 
         mEditText.setText(todo.getDescription());
     }
-
-//    @Override
-//    protected void onSaveInstanceState(Bundle outState) {
-//        outState.putInt(INSTANCE_TODO_ID, mTodoId);
-//        super.onSaveInstanceState(outState);
-//    }
 
     private void openBible() {
         CharSequence selectedText = getUserSelectedText();

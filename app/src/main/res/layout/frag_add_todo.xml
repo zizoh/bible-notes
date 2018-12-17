@@ -10,6 +10,7 @@
         android:layout_height="match_parent"
         android:gravity="start"
         android:hint="@string/edit_todo_description"
+        android:background="@android:color/transparent"
         android:paddingBottom="@dimen/activity_horizontal_margin" />
 
 </ScrollView>
