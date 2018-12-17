@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TodoApp</string>
+    <string name="edit_todo_description">Add Todo</string>
+    <string name="add_button">Add</string>
+    <string name="update_button">Update</string>
+    <string name="sign_in">Sign In</string>
+    <string name="menu_sign_out">Sign Out</string>
+    <string name="menu_sync">Sync</string>
+</resources>

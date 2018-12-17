@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "445330682867",
+    "firebase_url": "https://todoapp-39c4d.firebaseio.com",
+    "project_id": "todoapp-39c4d",
+    "storage_bucket": "todoapp-39c4d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445330682867:android:b61c622d604a10b2",
+        "android_client_info": {
+          "package_name": "com.zizohanto.todoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445330682867-2n4i1qg900sqp0cg4isifiv67la071no.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zizohanto.todoapp",
+            "certificate_hash": "a6cc368d8a702f197a48f55a821497dfe9aeff7a"
+          }
+        },
+        {
+          "client_id": "445330682867-ac4dh7e7c3ai7p5vbecck8fr4p1n70rh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACSZJnRYm_yE4vLxJCvIbVhYjeFqx38Fc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445330682867-ac4dh7e7c3ai7p5vbecck8fr4p1n70rh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
