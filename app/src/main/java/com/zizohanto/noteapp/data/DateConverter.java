@@ -1,4 +1,4 @@
-package com.zizohanto.todoapp.data;
+package com.zizohanto.noteapp.data;
 
 import android.arch.persistence.room.TypeConverter;
 

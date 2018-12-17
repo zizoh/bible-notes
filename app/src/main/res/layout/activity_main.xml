@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".todos.TodosActivity">
+    tools:context=".notes.NotesActivity">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerViewTodos"
+        android:id="@+id/rv_notes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:drawSelectorOnTop="true"
         android:paddingBottom="80dp" />
 
-    <!-- Floating action button that launches AddTaskActivity when clicked -->
+    <!-- Floating action button that launches AddTodoActivity when clicked -->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"

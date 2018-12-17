@@ -1,4 +1,4 @@
-package com.zizohanto.todoapp.todos;
+package com.zizohanto.noteapp.notes;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -24,26 +24,26 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.zizohanto.todoapp.AppExecutors;
-import com.zizohanto.todoapp.R;
-import com.zizohanto.todoapp.addedittodo.AddTodoActivity;
-import com.zizohanto.todoapp.addedittodo.AddTodoFragment;
-import com.zizohanto.todoapp.data.AppDatabase;
-import com.zizohanto.todoapp.data.TodoEntry;
-import com.zizohanto.todoapp.signin.SignInActivity;
+import com.zizohanto.noteapp.AppExecutors;
+import com.zizohanto.noteapp.R;
+import com.zizohanto.noteapp.addeditnote.AddNoteActivity;
+import com.zizohanto.noteapp.addeditnote.AddNoteFragment;
+import com.zizohanto.noteapp.data.AppDatabase;
+import com.zizohanto.noteapp.data.NoteEntry;
+import com.zizohanto.noteapp.signin.SignInActivity;
 
 import java.util.List;
 
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
-public class TodosActivity extends AppCompatActivity implements TodoAdapter.ItemClickListener, GoogleApiClient.OnConnectionFailedListener {
+public class NotesActivity extends AppCompatActivity implements NoteAdapter.ItemClickListener, GoogleApiClient.OnConnectionFailedListener {
 
     public static final String ANONYMOUS = "anonymous";
     // Constant for logging
-    private static final String TAG = TodosActivity.class.getSimpleName();
+    private static final String TAG = NotesActivity.class.getSimpleName();
     // Member variables for the adapter and RecyclerView
     private RecyclerView mRecyclerView;
-    private TodoAdapter mAdapter;
+    private NoteAdapter mAdapter;
     private AppDatabase mDb;
     private String mUsername;
 
@@ -83,14 +83,14 @@ public class TodosActivity extends AppCompatActivity implements TodoAdapter.Item
         }
 
         // Set the RecyclerView to its corresponding view
-        mRecyclerView = findViewById(R.id.recyclerViewTodos);
+        mRecyclerView = findViewById(R.id.rv_notes);
 
         // Set the layout for the RecyclerView to be a linear layout, which measures and
         // positions items within a RecyclerView into a linear list
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Initialize the adapter and attach it to the RecyclerView
-        mAdapter = new TodoAdapter(this, this);
+        mAdapter = new NoteAdapter(this, this);
         mRecyclerView.setAdapter(mAdapter);
 
         DividerItemDecoration decoration = new DividerItemDecoration(getApplicationContext(), VERTICAL);
@@ -115,8 +115,8 @@ public class TodosActivity extends AppCompatActivity implements TodoAdapter.Item
                     @Override
                     public void run() {
                         int position = viewHolder.getAdapterPosition();
-                        List<TodoEntry> todos = mAdapter.getTodos();
-                        mDb.todoDao().deleteTodo(todos.get(position));
+                        List<NoteEntry> notes = mAdapter.getNotes();
+                        mDb.noteDao().deleteNote(notes.get(position));
                     }
                 });
             }
@@ -127,7 +127,7 @@ public class TodosActivity extends AppCompatActivity implements TodoAdapter.Item
         fabButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent addTodoIntent = new Intent(TodosActivity.this, AddTodoActivity.class);
+                Intent addTodoIntent = new Intent(NotesActivity.this, AddNoteActivity.class);
                 startActivity(addTodoIntent);
             }
         });
@@ -138,11 +138,11 @@ public class TodosActivity extends AppCompatActivity implements TodoAdapter.Item
 
     private void setupViewModel() {
         MainViewModel viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        viewModel.getTodos().observe(this, new Observer<List<TodoEntry>>() {
+        viewModel.getNotes().observe(this, new Observer<List<NoteEntry>>() {
             @Override
-            public void onChanged(@Nullable List<TodoEntry> todoEntries) {
+            public void onChanged(@Nullable List<NoteEntry> todoEntries) {
                 Log.d(TAG, "Updating list of todos from LiveData in ViewModel");
-                mAdapter.setTodos(todoEntries);
+                mAdapter.setNotes(todoEntries);
             }
         });
     }
@@ -150,8 +150,8 @@ public class TodosActivity extends AppCompatActivity implements TodoAdapter.Item
     @Override
     public void onItemClickListener(int itemId) {
         // Launch AddTaskActivity adding the itemId as an extra in the intent
-        Intent intent = new Intent(TodosActivity.this, AddTodoActivity.class);
-        intent.putExtra(AddTodoFragment.EXTRA_TODO_ID, itemId);
+        Intent intent = new Intent(NotesActivity.this, AddNoteActivity.class);
+        intent.putExtra(AddNoteFragment.EXTRA_NOTE_ID, itemId);
         startActivity(intent);
     }
 
@@ -174,7 +174,7 @@ public class TodosActivity extends AppCompatActivity implements TodoAdapter.Item
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.todos_activity_menu, menu);
+        getMenuInflater().inflate(R.menu.notes_activity_menu, menu);
         return true;
     }
 

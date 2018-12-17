@@ -1,4 +1,4 @@
-package com.zizohanto.todoapp.todos;
+package com.zizohanto.noteapp.notes;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,33 +7,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.zizohanto.todoapp.R;
-import com.zizohanto.todoapp.data.TodoEntry;
+import com.zizohanto.noteapp.R;
+import com.zizohanto.noteapp.data.NoteEntry;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
-public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TaskViewHolder> {
+public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.TaskViewHolder> {
 
     // Constant for date format
     private static final String DATE_FORMAT = "dd/MM/yyy";
 
-    // Member variable to handle item clicks
     final private ItemClickListener mItemClickListener;
-    // Class variables for the List that holds task data and the Context
-    private List<TodoEntry> mTodoEntries;
+    private List<NoteEntry> mNoteEntries;
     private Context mContext;
     // Date formatter
     private SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
 
     /**
-     * Constructor for the TodoAdapter that initializes the Context.
+     * Constructor for the NoteAdapter that initializes the Context.
      *
      * @param context  the current Context
      * @param listener the ItemClickListener
      */
-    public TodoAdapter(Context context, ItemClickListener listener) {
+    public NoteAdapter(Context context, ItemClickListener listener) {
         mContext = context;
         mItemClickListener = listener;
     }
@@ -45,9 +43,8 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TaskViewHolder
      */
     @Override
     public TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // Inflate the task_layout to a view
         View view = LayoutInflater.from(mContext)
-                .inflate(R.layout.todo_layout, parent, false);
+                .inflate(R.layout.note_layout, parent, false);
 
         return new TaskViewHolder(view);
     }
@@ -61,12 +58,12 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TaskViewHolder
     @Override
     public void onBindViewHolder(TaskViewHolder holder, int position) {
         // Determine the values of the wanted data
-        TodoEntry taskEntry = mTodoEntries.get(position);
-        String description = taskEntry.getDescription();
-        String updatedAt = dateFormat.format(taskEntry.getUpdatedAt());
+        NoteEntry noteEntry = mNoteEntries.get(position);
+        String description = noteEntry.getDescription();
+        String updatedAt = dateFormat.format(noteEntry.getUpdatedAt());
 
         //Set values
-        holder.todoDescriptionView.setText(description);
+        holder.noteView.setText(description);
         holder.updatedAtView.setText(updatedAt);
     }
 
@@ -75,22 +72,22 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TaskViewHolder
      */
     @Override
     public int getItemCount() {
-        if (mTodoEntries == null) {
+        if (mNoteEntries == null) {
             return 0;
         }
-        return mTodoEntries.size();
+        return mNoteEntries.size();
     }
 
-    public List<TodoEntry> getTodos() {
-        return mTodoEntries;
+    public List<NoteEntry> getNotes() {
+        return mNoteEntries;
     }
 
     /**
-     * When data changes, this method updates the list of taskEntries
+     * When data changes, this method updates the list of noteEntries
      * and notifies the adapter to use the new values on it
      */
-    public void setTodos(List<TodoEntry> taskEntries) {
-        mTodoEntries = taskEntries;
+    public void setNotes(List<NoteEntry> noteEntries) {
+        mNoteEntries = noteEntries;
         notifyDataSetChanged();
     }
 
@@ -101,7 +98,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TaskViewHolder
     // Inner class for creating ViewHolders
     class TaskViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView todoDescriptionView;
+        TextView noteView;
         TextView updatedAtView;
 
         /**
@@ -112,14 +109,14 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TaskViewHolder
         public TaskViewHolder(View itemView) {
             super(itemView);
 
-            todoDescriptionView = itemView.findViewById(R.id.todoDescription);
-            updatedAtView = itemView.findViewById(R.id.todoUpdatedAt);
+            noteView = itemView.findViewById(R.id.noteDescription);
+            updatedAtView = itemView.findViewById(R.id.noteUpdatedAt);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            int elementId = mTodoEntries.get(getAdapterPosition()).getId();
+            int elementId = mNoteEntries.get(getAdapterPosition()).getId();
             mItemClickListener.onItemClickListener(elementId);
         }
     }

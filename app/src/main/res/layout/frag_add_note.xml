@@ -5,11 +5,11 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/editTextTaskDescription"
+        android:id="@+id/et_note"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="start"
-        android:hint="@string/edit_todo_description"
+        android:hint="@string/edit_note_description"
         android:background="@android:color/transparent"
         android:paddingBottom="@dimen/activity_horizontal_margin" />
 

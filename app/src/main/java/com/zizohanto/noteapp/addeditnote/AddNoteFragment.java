@@ -1,4 +1,4 @@
-package com.zizohanto.todoapp.addedittodo;
+package com.zizohanto.noteapp.addeditnote;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,38 +19,38 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.zizohanto.todoapp.AppExecutors;
-import com.zizohanto.todoapp.R;
-import com.zizohanto.todoapp.data.AppDatabase;
-import com.zizohanto.todoapp.data.TodoEntry;
-import com.zizohanto.todoapp.utils.BibleUtils;
+import com.zizohanto.noteapp.AppExecutors;
+import com.zizohanto.noteapp.R;
+import com.zizohanto.noteapp.data.AppDatabase;
+import com.zizohanto.noteapp.data.NoteEntry;
+import com.zizohanto.noteapp.utils.BibleUtils;
 
 import java.util.Date;
 import java.util.List;
 
-public class AddTodoFragment extends Fragment {
-    // Extra for the to-do ID to be received in the intent
-    public static final String EXTRA_TODO_ID = "extraTodoId";
-    // Extra for the to-do ID to be received after rotation
-    public static final String INSTANCE_TODO_ID = "instanceTodoId";
+public class AddNoteFragment extends Fragment {
+    // Extra for the note ID to be received in the intent
+    public static final String EXTRA_NOTE_ID = "extraNoteId";
+    // Extra for the note ID to be received after rotation
+    public static final String INSTANCE_NOTE_ID = "instanceNoteId";
 
-    // Constant for default to-do id to be used when not in update mode
-    public static final int DEFAULT_TODO_ID = -1;
+    // Constant for default note id to be used when not in update mode
+    public static final int DEFAULT_NOTE_ID = -1;
 
-    private static final String TAG = AddTodoFragment.class.getSimpleName();
+    private static final String TAG = AddNoteFragment.class.getSimpleName();
 
     // Fields for views
-    EditText mEditText;
+    EditText mNote;
 
-    private int mTodoId = DEFAULT_TODO_ID;
+    private int mNoteId = DEFAULT_NOTE_ID;
 
     // Member variable for the Database
     private AppDatabase mLocalDb;
 
-    public static AddTodoFragment newInstance(@Nullable int todoId) {
+    public static AddNoteFragment newInstance(@Nullable int noteId) {
         Bundle arguments = new Bundle();
-        arguments.putInt(EXTRA_TODO_ID, todoId);
-        AddTodoFragment fragment = new AddTodoFragment();
+        arguments.putInt(EXTRA_NOTE_ID, noteId);
+        AddNoteFragment fragment = new AddNoteFragment();
         fragment.setArguments(arguments);
         return fragment;
     }
@@ -63,7 +62,7 @@ public class AddTodoFragment extends Fragment {
         mLocalDb = AppDatabase.getInstance(getActivity().getApplicationContext());
 
         if (null != getArguments()) {
-            mTodoId = getArguments().getInt(EXTRA_TODO_ID, DEFAULT_TODO_ID);
+            mNoteId = getArguments().getInt(EXTRA_NOTE_ID, DEFAULT_NOTE_ID);
         }
 
     }
@@ -72,22 +71,21 @@ public class AddTodoFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        Log.e(TAG, String.valueOf(mTodoId));
-        AddTodoViewModelFactory factory = new AddTodoViewModelFactory(mLocalDb, mTodoId);
+        AddNoteViewModelFactory factory = new AddNoteViewModelFactory(mLocalDb, mNoteId);
 
-        final AddTodoViewModel viewModel
-                = ViewModelProviders.of(this, factory).get(AddTodoViewModel.class);
+        final AddNoteViewModel viewModel
+                = ViewModelProviders.of(this, factory).get(AddNoteViewModel.class);
 
 
-        viewModel.getTodo().observe(this, new Observer<TodoEntry>() {
+        viewModel.getNote().observe(this, new Observer<NoteEntry>() {
             @Override
-            public void onChanged(@Nullable TodoEntry todoEntry) {
-                viewModel.getTodo().removeObserver(this);
-                populateUI(todoEntry);
+            public void onChanged(@Nullable NoteEntry noteEntry) {
+                viewModel.getNote().removeObserver(this);
+                populateUI(noteEntry);
             }
         });
 
-        mEditText.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
+        mNote.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
             // Called when the action mode is created; startActionMode() was called
             @Override
             public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
@@ -128,9 +126,9 @@ public class AddTodoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.frag_add_todo, container, false);
+        View root = inflater.inflate(R.layout.frag_add_note, container, false);
         setHasOptionsMenu(true);
-        mEditText = (EditText) root.findViewById(R.id.editTextTaskDescription);
+        mNote = (EditText) root.findViewById(R.id.et_note);
 
         // Set up floating action button
         FloatingActionButton fab =
@@ -140,18 +138,18 @@ public class AddTodoFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String description = mEditText.getText().toString();
+                String description = mNote.getText().toString();
                 Date date = new Date();
 
-                final TodoEntry todo = new TodoEntry(description, date);
+                final NoteEntry note = new NoteEntry(description, date);
                 AppExecutors.getInstance().diskIO().execute(new Runnable() {
                     @Override
                     public void run() {
-                        if (mTodoId == DEFAULT_TODO_ID) {
-                            mLocalDb.todoDao().insertTodo(todo);
+                        if (mNoteId == DEFAULT_NOTE_ID) {
+                            mLocalDb.noteDao().insertNote(note);
                         } else {
-                            todo.setId(mTodoId);
-                            mLocalDb.todoDao().updateTodo(todo);
+                            note.setId(mNoteId);
+                            mLocalDb.noteDao().updateNote(note);
                         }
                     }
                 });
@@ -162,12 +160,12 @@ public class AddTodoFragment extends Fragment {
         return root;
     }
 
-    private void populateUI(TodoEntry todo) {
-        if (todo == null) {
+    private void populateUI(NoteEntry note) {
+        if (note == null) {
             return;
         }
 
-        mEditText.setText(todo.getDescription());
+        mNote.setText(note.getDescription());
     }
 
     private void openBible() {
@@ -188,6 +186,6 @@ public class AddTodoFragment extends Fragment {
     }
 
     private CharSequence getUserSelectedText() {
-        return mEditText.getText().subSequence(mEditText.getSelectionStart(), mEditText.getSelectionEnd());
+        return mNote.getText().subSequence(mNote.getSelectionStart(), mNote.getSelectionEnd());
     }
 }

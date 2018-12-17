@@ -1,4 +1,4 @@
-package com.zizohanto.todoapp.data;
+package com.zizohanto.noteapp.data;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
@@ -11,19 +11,19 @@ import android.arch.persistence.room.Update;
 import java.util.List;
 
 @Dao
-public interface TodoDao {
-    @Query("SELECT * FROM todo")
-    LiveData<List<TodoEntry>> loadAllTodos();
+public interface NoteDao {
+    @Query("SELECT * FROM note")
+    LiveData<List<NoteEntry>> loadAllNotes();
 
     @Insert
-    void insertTodo(TodoEntry todoEntry);
+    void insertNote(NoteEntry noteEntry);
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    void updateTodo(TodoEntry todoEntry);
+    void updateNote(NoteEntry noteEntry);
 
     @Delete
-    void deleteTodo(TodoEntry todoEntry);
+    void deleteNote(NoteEntry noteEntry);
 
-    @Query("SELECT * FROM todo WHERE id = :id")
-    LiveData<TodoEntry> loadTodoById(int id);
+    @Query("SELECT * FROM note WHERE id = :id")
+    LiveData<NoteEntry> loadNoteById(int id);
 }

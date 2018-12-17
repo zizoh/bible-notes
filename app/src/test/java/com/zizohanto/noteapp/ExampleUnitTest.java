@@ -1,4 +1,4 @@
-package com.zizohanto.todoapp;
+package com.zizohanto.noteapp;
 
 import org.junit.Test;
 

@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">TodoApp</string>
-    <string name="edit_todo_description">Add Todo</string>
+    <string name="app_name">NoteApp</string>
+    <string name="edit_note_description">Add Note</string>
     <string name="add_button">Add</string>
     <string name="update_button">Update</string>
     <string name="sign_in">Sign In</string>

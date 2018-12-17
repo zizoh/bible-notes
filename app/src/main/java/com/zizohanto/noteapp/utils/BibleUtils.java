@@ -1,6 +1,6 @@
-package com.zizohanto.todoapp.utils;
+package com.zizohanto.noteapp.utils;
 
-import com.zizohanto.todoapp.data.BooksOfBibleCodes;
+import com.zizohanto.noteapp.data.BooksOfBibleCodes;
 
 import java.util.Map;
 

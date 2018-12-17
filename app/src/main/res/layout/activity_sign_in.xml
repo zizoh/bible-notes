@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="com.zizohanto.todoapp.signin.SignInActivity">
+    tools:context="com.zizohanto.noteapp.signin.SignInActivity">
 
     <TextView
         android:layout_width="wrap_content"

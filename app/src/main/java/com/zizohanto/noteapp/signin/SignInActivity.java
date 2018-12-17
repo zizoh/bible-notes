@@ -1,4 +1,4 @@
-package com.zizohanto.todoapp.signin;
+package com.zizohanto.noteapp.signin;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,8 +21,8 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.zizohanto.todoapp.R;
-import com.zizohanto.todoapp.todos.TodosActivity;
+import com.zizohanto.noteapp.R;
+import com.zizohanto.noteapp.notes.NotesActivity;
 
 public class SignInActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
@@ -112,7 +112,7 @@ public class SignInActivity extends AppCompatActivity implements
                             Toast.makeText(SignInActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         } else {
-                            startActivity(new Intent(SignInActivity.this, TodosActivity.class));
+                            startActivity(new Intent(SignInActivity.this, NotesActivity.class));
                             finish();
                         }
                     }

@@ -1,4 +1,4 @@
-package com.zizohanto.todoapp.data;
+package com.zizohanto.noteapp.data;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
@@ -9,26 +9,27 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.Date;
 
-@Entity(tableName = "todo")
+@Entity(tableName = "note")
 @IgnoreExtraProperties
-public class TodoEntry {
+public class NoteEntry {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String description;
     @ColumnInfo(name = "updated_at")
     private Date updatedAt;
 
-    public TodoEntry() {
-        // Default constructor required for calls to DataSnapshot.getValue(TodoEntry.class)
+    @Ignore
+    public NoteEntry() {
+        // Default constructor required for calls to DataSnapshot.getValue(NoteEntry.class)
     }
 
     @Ignore
-    public TodoEntry(String description, Date updatedAt) {
+    public NoteEntry(String description, Date updatedAt) {
         this.description = description;
         this.updatedAt = updatedAt;
     }
 
-    public TodoEntry(int id, String description, Date updatedAt) {
+    public NoteEntry(int id, String description, Date updatedAt) {
         this.id = id;
         this.description = description;
         this.updatedAt = updatedAt;

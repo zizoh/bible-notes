@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.zizohanto.todoapp">
+    package="com.zizohanto.noteapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <application
@@ -10,15 +10,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".todos.TodosActivity">
+        <activity android:name="com.zizohanto.noteapp.notes.NotesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".addedittodo.AddTodoActivity"></activity>
-        <activity android:name=".signin.SignInActivity"></activity>
+        <activity android:name="com.zizohanto.noteapp.addeditnote.AddNoteActivity"></activity>
+        <activity android:name="com.zizohanto.noteapp.signin.SignInActivity"></activity>
     </application>
 
 </manifest>

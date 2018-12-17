@@ -1,4 +1,4 @@
-package com.zizohanto.todoapp;
+package com.zizohanto.noteapp;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
